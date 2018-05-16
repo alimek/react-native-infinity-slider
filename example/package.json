@@ -12,7 +12,9 @@
   },
   "devDependencies": {
     "babel-jest": "22.4.3",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-preset-react-native": "4.0.0",
+    "glob-to-regexp": "^0.4.0",
     "jest": "22.4.3",
     "react-test-renderer": "16.3.1"
   },

@@ -1,38 +1,32 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
+// @flow
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
+import ReactNative from 'react-native';
+
+import RNInfinitySlider from 'react-native-infinity-slider';
+
+const {
+  View,
   Text,
-  View
-} from 'react-native';
+  StyleSheet,
+} = ReactNative;
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export default class App extends Component {
+  state = {
+    value: 0,
+  };
 
-type Props = {};
-export default class App extends Component<Props> {
+  onValueChanged = value => this.setState({ value});
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <View>
+          <Text>Value: {this.state.value}</Text>
+        </View>
+        <RNInfinitySlider
+          initialValue={0}
+          onValueChange={this.onValueChanged}
+        />
       </View>
     );
   }
@@ -44,15 +38,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
