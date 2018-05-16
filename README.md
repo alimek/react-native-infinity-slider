@@ -7,8 +7,8 @@ Infinity slider for React Native - Pure JS Slider with infinity value on both si
 |----------|------|---------|-------------|
 | initialValue | `Number` | required | Default value which will be used. |
 | onValueChange | `Function` | required | Callback called on every value changed. `value: Number` as parameter.|
-| yRange | `Array<Number>` | ADD | Array with numbers - distance from start touch point on Y Axis to calculate multiplicity value when moving left/right |
-| yValues | `Array<number>` | ADD | Array with numbers - values which will be added to `value` when you moved left/right |
+| yRange | `Array<Number>` | | Distance from start touch point on Y Axis to calculate multiplicity value when moving left/right |
+| yValues | `Array<number>` | | Values which will be added to `value` when you moved left/right |
 | xStep | `Number` | 10 | Distance which you have to move to increment/decrement value |
 | renderThumb | `Function` | optional | Function to render thumb - middle component which is fixed |
 | renderDefaultBackground | `Function` | optional | Function to render background - should be positioned absolutely. |
