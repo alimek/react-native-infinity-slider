@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     height: 100,
   },
   mainBlock: {
-    flex: 1,
     borderRightWidth: 2,
     borderColor: '#979797',
     height: 70,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   lastBlock: {
     borderRightWidth: 0,
