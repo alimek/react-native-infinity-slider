@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   subBlockLine: {
-    flex: 0.5,
+    flex: 1,
     borderRightWidth: 1,
     borderColor: '#979797',
-    height: '100%'
+    height: '100%',
   },
   blocksContainer: {
     flexDirection: 'row',

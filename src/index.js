@@ -195,12 +195,13 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
   renderDefaultBackground = () => {
     const { xStep } = this.props;
-    const oneBlockWidth = width / xStep;
+    const oneBlockWidth = (width + 40) / 6;
     const translateValues = Platform
       .select({
         ios: {
-          subViewAmount: 15,
-          outputRange: [-oneBlockWidth * 10, -oneBlockWidth * 6.5 + 2, -oneBlockWidth * 5],
+          subViewAmount: 12,
+          outputRange: [-oneBlockWidth * 3 - 200, -(oneBlockWidth - 0.5) * 3, -oneBlockWidth * 3 + 200],
+
         },
         android: {
           subViewAmount: 5,
@@ -208,8 +209,8 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
         },
       });
     const mainBlocks = generateArrayBlock(translateValues.subViewAmount);
-    const subBlocks = generateArrayBlock(4);
-    const minInput = parseInt((width / 2) / xStep, 10);
+    const subBlocks = generateArrayBlock(5);
+    const minInput = parseInt((width + 40) / xStep, 10);
 
     return (
       <Animated.View
@@ -235,7 +236,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
                 styles.mainBlock,
                 index === (mainBlocks.length - 1) ? styles.lastBlock : null,
                 {
-                  width: width / 5,
+                  width: oneBlockWidth,
                 },
               ]}
             >
@@ -244,11 +245,11 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
                   <View
                     key={index2} //eslint-disable-line
                     style={[
-                      index === (subBlocks.length - 1) ? styles.lastBlock : null,
+                      index2 === (subBlocks.length - 1) ? styles.lastBlock : null,
                       styles.subBlock,
                     ]}
                   >
-                    <View style={styles.subBlockLine} />
+                    {index2 !== (subBlocks.length - 1) ? <View style={styles.subBlockLine} /> : null}
                   </View>
                 ))
               }
