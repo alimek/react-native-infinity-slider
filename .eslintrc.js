@@ -24,5 +24,16 @@ module.exports = {
     "react/jsx-first-prop-new-line": [2, "multiline"],
     "react/jsx-closing-bracket-location": [2, {"selfClosing": "line-aligned", nonEmpty: "line-aligned"}],
     "prefer-destructuring": ["error", {"object": true, "array": false}],
+    "react/sort-comp": [1, {
+      order: [
+        'static-methods',
+        'constructor',
+        'instance-variables',
+        'lifecycle',
+        '/^on.+$/',
+        'everything-else',
+        'render',
+      ]
+    }]
   },
 };

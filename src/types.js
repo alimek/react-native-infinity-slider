@@ -6,7 +6,6 @@ export type RNInfinitySliderPropTypes = {
   xStep?: number,
   renderThumb?: Function,
   renderDefaultBackground?: Function,
-  thumbColor?: string,
   thumbStyle?: Object,
 };
 
@@ -15,6 +14,15 @@ export type RNInfinitySliderState = {
   previewValue: number,
   currentXStep: number,
   isMoving: boolean,
+  width: number,
+};
+
+export type Event = {
+  nativeEvent: {
+    layout: {
+      width: number,
+    },
+  },
 };
 
 export type GestureState = {

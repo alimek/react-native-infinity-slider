@@ -16,7 +16,6 @@ Infinity slider for React Native - Pure JS Slider with infinity value on both si
 | xStep | `Number` | 10 | Distance which you have to move to increment/decrement value |
 | renderThumb | `Function` | optional | Function to render thumb - middle component which is fixed |
 | renderDefaultBackground | `Function` | optional | Function to render background - should be positioned absolutely. |
-| thumbColor | `String` | optional | Color for default thumb line |
 | thumbStyle | `Object` | optional | You can pass your style to overwrite default one |
 
 # How to use it

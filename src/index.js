@@ -3,17 +3,14 @@ import React from 'react';
 import ReactNative from 'react-native';
 
 import styles from './styles';
-import type { RNInfinitySliderPropTypes, RNInfinitySliderState, GestureState } from './types';
+import type { RNInfinitySliderPropTypes, RNInfinitySliderState, GestureState, Event } from './types';
 
 const {
   View,
   PanResponder,
-  Dimensions,
   Animated,
   Platform,
 } = ReactNative;
-
-const { width } = Dimensions.get('window');
 
 const generateArrayBlock = length => new Array(length).fill(0);
 
@@ -22,7 +19,6 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     yRange: [20, 50, 80, 100, 110],
     yValues: [0.1, 0.5, 1, 10, 50],
     xStep: 10,
-    thumbColor: '#69D4F2',
     thumbStyle: null,
   };
 
@@ -31,6 +27,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
     this.state = {
       value: props.value,
+      width: 0,
     };
     this.currentXStep = 0;
     this.previewValue = props.value;
@@ -91,7 +88,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     const lastXStep = this.currentXStep;
     const lastMultiplicity = this.currentMultiplicity;
 
-    const shouldIncrement = this.shouldIcrement(fromX);
+    const shouldIncrement = this.shouldIncrement(fromX);
     const change = this.calculateChangedValue(fromX, fromY);
 
     if (lastMultiplicity !== this.currentMultiplicity) {
@@ -117,13 +114,13 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     }
   };
 
-  shouldIcrement = (fromX: number): boolean => fromX > 0;
+  shouldIncrement = (fromX: number): boolean => fromX > 0;
 
   calculateChangedValue = (fromX: number, fromY: number): number => {
     const xStep = this.calculateXValue(Math.abs(fromX));
     const multiplicityLevel = this.calculateMultiplicity(fromY);
     this.currentXStep = xStep;
-    this.animationXStep = this.shouldIcrement(fromX) ? xStep : -xStep;
+    this.animationXStep = this.shouldIncrement(fromX) ? xStep : -xStep;
 
     return parseFloat(parseFloat(multiplicityLevel * xStep).toFixed(2));
   };
@@ -137,6 +134,12 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     }
 
     return this.currentXStep;
+  };
+
+  onLayout = (event: Event) => {
+    if (this.state.width) return;
+    const { width } = event.nativeEvent.layout;
+    this.setState({ width });
   };
 
   calculateMultiplicity = (distanceFromPoint: number): number => {
@@ -185,9 +188,6 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     <View
       style={[
         styles.defaultThumb,
-        {
-          borderColor: this.props.thumbColor,
-        },
         this.props.thumbStyle ? this.props.thumbStyle : null,
       ]}
     />
@@ -195,11 +195,12 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
   renderDefaultBackground = () => {
     const { xStep } = this.props;
-    const oneBlockWidth = (width + 40) / 6;
+    const { width } = this.state;
+    const oneBlockWidth = width / 6;
     const translateValues = Platform
       .select({
         ios: {
-          subViewAmount: 12,
+          subViewAmount: 10,
           outputRange: [-oneBlockWidth * 3 - 200, -(oneBlockWidth - 0.5) * 3, -oneBlockWidth * 3 + 200],
 
         },
@@ -210,7 +211,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
       });
     const mainBlocks = generateArrayBlock(translateValues.subViewAmount);
     const subBlocks = generateArrayBlock(5);
-    const minInput = parseInt((width + 40) / xStep, 10);
+    const minInput = parseInt(width / xStep, 10);
 
     return (
       <Animated.View
@@ -264,7 +265,10 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     const { renderThumb, renderBackground, yValues } = this.props;
 
     return (
-      <View style={styles.mainContainer}>
+      <View
+        style={styles.mainContainer}
+        onLayout={this.onLayout}
+      >
         <View style={styles.backgroundContainer}>
           {renderBackground ? renderBackground() : this.renderDefaultBackground()}
         </View>
