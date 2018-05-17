@@ -1,8 +1,8 @@
 export type RNInfinitySliderPropTypes = {
-  initialValue: number,
+  value: number,
   onValueChange: Function,
   yRange?: Array<number>,
-  yValues?: Array<number>
+  yValues?: Array<number>,
   xStep?: number,
   renderThumb?: Function,
   renderDefaultBackground?: Function,

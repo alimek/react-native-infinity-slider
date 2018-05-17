@@ -15,7 +15,7 @@ export default class App extends Component {
     value: 0,
   };
 
-  onValueChanged = value => this.setState({ value});
+  onValueChanged = value => this.setState({ value });
 
   render() {
     return (
@@ -24,7 +24,7 @@ export default class App extends Component {
           <Text>Value: {this.state.value}</Text>
         </View>
         <RNInfinitySlider
-          initialValue={0}
+          value={this.state.value}
           onValueChange={this.onValueChanged}
         />
       </View>

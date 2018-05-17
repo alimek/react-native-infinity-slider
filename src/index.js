@@ -30,11 +30,11 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     super(props);
 
     this.state = {
-      value: props.initialValue,
+      value: props.value,
     };
     this.currentXStep = 0;
-    this.previewValue = props.initialValue;
-    this.changeStepValue = props.initialValue;
+    this.previewValue = props.value;
+    this.changeStepValue = props.value;
   }
 
   scaleThumbAnimation = new Animated.Value(1);
@@ -62,7 +62,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
       this.animateThumb(this.currentMultiplicity);
       this.animateX(0);
       this.setState({
-        value: this.previewValue,
+        value: this.props.value,
       });
     },
   });
