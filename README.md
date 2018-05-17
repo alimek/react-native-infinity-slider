@@ -37,7 +37,7 @@ export default class App extends Component {
     value: 0,
   };
 
-  onValueChanged = value => this.setState({ value});
+  onValueChanged = value => this.setState({ value });
 
   render() {
     return (
