@@ -10,6 +10,7 @@ const {
   PanResponder,
   Dimensions,
   Animated,
+  Platform,
 } = ReactNative;
 
 const { width } = Dimensions.get('window');
@@ -194,11 +195,21 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
   renderDefaultBackground = () => {
     const { xStep } = this.props;
-    const mainBlocks = generateArrayBlock(15);
-    const subBlocks = generateArrayBlock(4);
-
-    const minInput = parseInt((width / 2) / xStep, 10);
     const oneBlockWidth = width / 5;
+    const translateValues = Platform
+      .select({
+        ios: {
+          subViewAmount: 15,
+          outputRange: [-oneBlockWidth * 10, -oneBlockWidth * 7.5, -oneBlockWidth * 5],
+        },
+        android: {
+          subViewAmount: 5,
+          outputRange: [-100, 0, 100],
+        },
+      });
+    const mainBlocks = generateArrayBlock(translateValues.subViewAmount);
+    const subBlocks = generateArrayBlock(4);
+    const minInput = parseInt((width / 2) / xStep, 10);
 
     return (
       <Animated.View
@@ -209,7 +220,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
               {
                 translateX: this.scaleXAnimation.interpolate({
                   inputRange: [-minInput, 0, minInput],
-                  outputRange: [-oneBlockWidth * 10, -oneBlockWidth * 7.5, -oneBlockWidth * 5],
+                  outputRange: translateValues.outputRange,
                 }),
               },
             ],
