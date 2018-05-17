@@ -195,12 +195,12 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
   renderDefaultBackground = () => {
     const { xStep } = this.props;
-    const oneBlockWidth = width / 5;
+    const oneBlockWidth = width / xStep;
     const translateValues = Platform
       .select({
         ios: {
           subViewAmount: 15,
-          outputRange: [-oneBlockWidth * 10, -oneBlockWidth * 7.5, -oneBlockWidth * 5],
+          outputRange: [-oneBlockWidth * 10, -oneBlockWidth * 6.5 + 2, -oneBlockWidth * 5],
         },
         android: {
           subViewAmount: 5,

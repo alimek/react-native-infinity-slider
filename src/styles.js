@@ -1,33 +1,35 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   mainContainer: {
-    width: '100%',
+    width: width + 40,
+    height: 100,
     position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   middleContainer: {
-    paddingHorizontal: 15,
-    alignSelf: 'center',
-    zIndex: 1,
-  },
-  backgroundContainer: {
     position: 'absolute',
     top: 0,
-    left: 0,
     bottom: 0,
+    left: 0,
     right: 0,
+    zIndex: 1,
+    justifyContent: 'center',
+  },
+  backgroundContainer: {
+    flex: 1,
     justifyContent: 'center',
   },
   defaultThumb: {
     borderLeftWidth: 3,
-    height: 100,
+    height: 80,
+    alignSelf: 'center',
   },
   mainBlock: {
     borderRightWidth: 2,
     borderColor: '#979797',
-    height: 70,
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
