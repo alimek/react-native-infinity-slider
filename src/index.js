@@ -111,7 +111,6 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
 
     if (lastXStep !== this.currentXStep) {
       this.animateX(this.animationXStep);
-      console.log(this.animationXStep);
       this.previewValue = newValue;
       onValueChange(newValue);
     }
