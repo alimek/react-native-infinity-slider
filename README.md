@@ -1,6 +1,8 @@
 # react-native-infinity-slider
 Infinity slider for React Native - Pure JS Slider with infinity value on both side. `Android` and `iOS` platform supported. Tested on `RN` version `0.55.x`.
 
+![Problem and solution discussion](https://ux.stackexchange.com/q/65119)
+
 ![2018-05-15 23-13-00](https://thumbs.gfycat.com/MasculineBeneficialLice-max-1mb.gif)
 
 # Props
