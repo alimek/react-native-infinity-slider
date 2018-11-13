@@ -1,6 +1,6 @@
 {
   "name": "react-native-infinity-slider",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "ReactNative Infinity Slider",
   "main": "src/index.js",
   "repository": "https://github.com/alimek/react-native-infinity-slider.git",

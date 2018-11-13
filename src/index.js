@@ -23,6 +23,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<
     yValues: [0.1, 0.5, 1, 10, 50],
     xStep: 10,
     thumbStyle: null,
+    containerStyle: null,
   };
 
   constructor(props: RNInfinitySliderPropTypes) {
@@ -261,10 +262,10 @@ class ReactNativeInfinitySlider extends React.PureComponent<
   };
 
   render() {
-    const { renderThumb, yValues } = this.props;
+    const { renderThumb, yValues, containerStyle } = this.props;
 
     return (
-      <View style={styles.mainContainer} onLayout={this.onLayout}>
+      <View style={[styles.mainContainer, containerStyle]} onLayout={this.onLayout}>
         <View style={styles.backgroundContainer}>
           {this.renderBackground()}
         </View>

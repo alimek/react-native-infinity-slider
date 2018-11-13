@@ -17,6 +17,7 @@ Infinity slider for React Native - Pure JS Slider with infinity value on both si
 | renderThumb | `Function` | optional | Function to render thumb - middle component which is fixed |
 | renderBackground | `Function` | optional | Function to render background - should be positioned absolutely. |
 | thumbStyle | `Object` | optional | You can pass your style to overwrite default one |
+| containerStyle | `Object` | optional | You can pass your style to overwrite main container style |
 
 # How to use it
 
