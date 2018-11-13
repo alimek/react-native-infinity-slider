@@ -1,20 +1,23 @@
 // @flow
-import React from 'react';
-import ReactNative from 'react-native';
+import React from "react";
+import ReactNative from "react-native";
 
-import styles from './styles';
-import type { RNInfinitySliderPropTypes, RNInfinitySliderState, GestureState, Event } from './types';
+import styles from "./styles";
+import type {
+  RNInfinitySliderPropTypes,
+  RNInfinitySliderState,
+  GestureState,
+  Event,
+} from "./types";
 
-const {
-  View,
-  PanResponder,
-  Animated,
-  Platform,
-} = ReactNative;
+const { View, PanResponder, Animated, Platform } = ReactNative;
 
 const generateArrayBlock = length => new Array(length).fill(0);
 
-class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderPropTypes, RNInfinitySliderState> {
+class ReactNativeInfinitySlider extends React.PureComponent<
+  RNInfinitySliderPropTypes,
+  RNInfinitySliderState
+> {
   static defaultProps = {
     yRange: [20, 50, 80, 100, 110],
     yValues: [0.1, 0.5, 1, 10, 50],
@@ -64,24 +67,18 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     },
   });
 
-  animateThumb = (toValue: number) => Animated
-    .timing(
-      this.scaleThumbAnimation,
-      {
-        toValue,
-        duration: 200,
-        useNativeDriver: true,
-      },
-    ).start();
+  animateThumb = (toValue: number) =>
+    Animated.timing(this.scaleThumbAnimation, {
+      toValue,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
 
-  animateX = (toValue: number) => Animated
-    .spring(
-      this.scaleXAnimation,
-      {
-        toValue,
-        useNativeDriver: true,
-      },
-    ).start();
+  animateX = (toValue: number) =>
+    Animated.spring(this.scaleXAnimation, {
+      toValue,
+      useNativeDriver: true,
+    }).start();
 
   changeValueOnMove = (fromX: number, fromY: number) => {
     const { onValueChange } = this.props;
@@ -161,7 +158,7 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
           break;
         }
         default: {
-          if (index === (yRange.length - 1) && distanceAbs >= maxYRange) {
+          if (index === yRange.length - 1 && distanceAbs >= maxYRange) {
             checkedValue = true;
             rangeIndex = index;
             break;
@@ -193,22 +190,24 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
     />
   );
 
-  renderDefaultBackground = () => {
-    const { xStep } = this.props;
+  renderBackground = () => {
+    const { xStep, renderBackground } = this.props;
     const { width } = this.state;
     const oneBlockWidth = width / 6;
-    const translateValues = Platform
-      .select({
-        ios: {
-          subViewAmount: 10,
-          outputRange: [-oneBlockWidth * 3 - 200, -(oneBlockWidth - 0.5) * 3, -oneBlockWidth * 3 + 200],
-
-        },
-        android: {
-          subViewAmount: 5,
-          outputRange: [-100, 0, 100],
-        },
-      });
+    const translateValues = Platform.select({
+      ios: {
+        subViewAmount: 10,
+        outputRange: [
+          -oneBlockWidth * 3 - 200,
+          -(oneBlockWidth - 0.5) * 3,
+          -oneBlockWidth * 3 + 200,
+        ],
+      },
+      android: {
+        subViewAmount: 5,
+        outputRange: [-100, 0, 100],
+      },
+    });
     const mainBlocks = generateArrayBlock(translateValues.subViewAmount);
     const subBlocks = generateArrayBlock(5);
     const minInput = parseInt(width / xStep, 10);
@@ -229,48 +228,45 @@ class ReactNativeInfinitySlider extends React.PureComponent<RNInfinitySliderProp
           },
         ]}
       >
-        {
-          mainBlocks.map((arrayBlock, index) => (
-            <View
-              key={index} //eslint-disable-line
-              style={[
-                styles.mainBlock,
-                index === (mainBlocks.length - 1) ? styles.lastBlock : null,
-                {
-                  width: oneBlockWidth,
-                },
-              ]}
-            >
-              {
-                subBlocks.map((subBlock, index2) => (
+        {renderBackground
+          ? renderBackground()
+          : mainBlocks.map((arrayBlock, index) => (
+              <View
+                key={index} //eslint-disable-line
+                style={[
+                  styles.mainBlock,
+                  index === mainBlocks.length - 1 ? styles.lastBlock : null,
+                  {
+                    width: oneBlockWidth,
+                  },
+                ]}
+              >
+                {subBlocks.map((subBlock, index2) => (
                   <View
                     key={index2} //eslint-disable-line
                     style={[
-                      index2 === (subBlocks.length - 1) ? styles.lastBlock : null,
+                      index2 === subBlocks.length - 1 ? styles.lastBlock : null,
                       styles.subBlock,
                     ]}
                   >
-                    {index2 !== (subBlocks.length - 1) ? <View style={styles.subBlockLine} /> : null}
+                    {index2 !== subBlocks.length - 1 ? (
+                      <View style={styles.subBlockLine} />
+                    ) : null}
                   </View>
-                ))
-              }
-            </View>
-          ))
-        }
+                ))}
+              </View>
+            ))}
       </Animated.View>
     );
   };
 
   render() {
-    const { renderThumb, renderBackground, yValues } = this.props;
+    const { renderThumb, yValues } = this.props;
 
     return (
-      <View
-        style={styles.mainContainer}
-        onLayout={this.onLayout}
-      >
+      <View style={styles.mainContainer} onLayout={this.onLayout}>
         <View style={styles.backgroundContainer}>
-          {renderBackground ? renderBackground() : this.renderDefaultBackground()}
+          {this.renderBackground()}
         </View>
         <Animated.View
           style={[
